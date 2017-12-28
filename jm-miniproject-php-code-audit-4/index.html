@@ -18,16 +18,16 @@
 <meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-4/index.html">
 <meta property="og:site_name" content="简眸">
 <meta property="og:description" content="MiniProject_PHP_Code_audit">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/4.png">
 <meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/5.png">
 <meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/1.png">
 <meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/2.png">
 <meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/3.png">
-<meta property="og:updated_time" content="2017-12-28T08:51:27.000Z">
+<meta property="og:updated_time" content="2017-12-28T11:14:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MiniProject_PHP_Code_audit-4">
 <meta name="twitter:description" content="MiniProject_PHP_Code_audit">
-<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web4/.png">
+<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web4/4.png">
 
   
 
@@ -181,7 +181,7 @@
           阅读次数<span id="busuanzi_value_page_pv"></span>
         </span>
         <h1 id="MiniProject-PHP-Code-audit-4-Writeup"><a href="#MiniProject-PHP-Code-audit-4-Writeup" class="headerlink" title="MiniProject_PHP_Code_audit-4 Writeup"></a><strong>MiniProject_PHP_Code_audit-4 Writeup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>初始变量被赋值为string，所以打开就是输出”is_numeric(a) and is_numeric(b) error ！”，根据题目同时出现is_numeric()和and判断，引用暗羽表姐的博客截图来绕过第二个is_numeric() 判断，绕过 。<a id="more"></a></p>
-<h2 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h2><p>只是知道这是绕过的一种方式，但是为什么会出现这种情况呢，本来以为只要第一个判断为真就不会判断后面的条件正确还是不正确 ，以为问题出现在is_numeric，但是问题好像出现在and上面，根据PHP的优先级来看 赋值运算= 优先级大于 and 。<br>举一个例子：<br><img src="/Base_Img/web4/.png" alt="Alt text"><br>算是PHP的一种特性吧：<br><img src="/Base_Img/web4/5.png" alt="Alt text"></p>
+<h2 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h2><p>只是知道这是绕过的一种方式，但是为什么会出现这种情况呢，本来以为只要第一个判断为真就不会判断后面的条件正确还是不正确 ，以为问题出现在is_numeric，但是问题好像出现在and上面，根据PHP的优先级来看 赋值运算= 优先级大于 and 。<br>举一个例子：<br><img src="/Base_Img/web4/4.png" alt="Alt text"><br>算是PHP的一种特性吧：<br><img src="/Base_Img/web4/5.png" alt="Alt text"></p>
 <h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><pre><code>&lt;?php 
 $test = true and false;
 var_dump($test);
@@ -204,7 +204,7 @@ var_dump($test2);
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-4/" data-id="cjbqe2p7i000bw6jkuqkzj6xl" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-4">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-4/" data-id="cjbqe77kj0008x3jk5tj8p123" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-4">分享到</a>
       
 
       
