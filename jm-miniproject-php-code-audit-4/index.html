@@ -8,18 +8,26 @@
 
   
 
-  <title>Archives | 简眸</title>
+  <title>MiniProject_PHP_Code_audit-4 | 简眸</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
-<meta property="og:type" content="website">
-<meta property="og:title" content="简眸">
-<meta property="og:url" content="https://jianmou.github.io/archives/index.html">
+  <meta name="description" content="MiniProject_PHP_Code_audit">
+<meta name="keywords" content="PHP代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MiniProject_PHP_Code_audit-4">
+<meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-4/index.html">
 <meta property="og:site_name" content="简眸">
-<meta property="og:description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
+<meta property="og:description" content="MiniProject_PHP_Code_audit">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/5.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/1.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/2.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web4/3.png">
+<meta property="og:updated_time" content="2017-12-28T08:51:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简眸">
-<meta name="twitter:description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
+<meta name="twitter:title" content="MiniProject_PHP_Code_audit-4">
+<meta name="twitter:description" content="MiniProject_PHP_Code_audit">
+<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web4/.png">
 
   
 
@@ -134,165 +142,114 @@
 </header>
 
     <div class="outer">
-      <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap"  data-scroll-reveal="enter left and over 0.7s">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-miniproject-php-code-audit-5/" class="archive-article-date">
+      <section id="main"><article   id="post-jm-miniproject-php-code-audit-4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div data-scroll-reveal="enter top and over 0.7s"  class="article-meta">
+    <a  href="/jm-miniproject-php-code-audit-4/" class="article-date">
   <i class="fa fa-calendar"></i>
-  <time  datetime="2017-09-17T15:05:03.000Z" itemprop="datePublished">9月 17</time>
+  <time  datetime="2017-09-17T15:05:02.000Z" itemprop="datePublished">2017-09-17</time>
 </a>
 
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MiniProject-PHP-Code-audit/">MiniProject_PHP_Code_audit</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner"  >
+    
+    
+
+      <header class="article-header">
+
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-miniproject-php-code-audit-5/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>MiniProject_PHP_Code_audit-5</a>
+    <h1 class="article-title" itemprop="name">
+      <i class="fa fa-pencil-square-o  article-title-icon"></i>MiniProject_PHP_Code_audit-4
     </h1>
   
 
 
-    </header>
-  </div>
-</article>
 
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-miniproject-php-code-audit-4/" class="archive-article-date">
-  <i class="fa fa-calendar"></i>
-  <time  datetime="2017-09-17T15:05:02.000Z" itemprop="datePublished">9月 17</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        </br>
+        <span id="busuanzi_container_page_pv">
+          阅读次数<span id="busuanzi_value_page_pv"></span>
+        </span>
+        <h1 id="MiniProject-PHP-Code-audit-4-Writeup"><a href="#MiniProject-PHP-Code-audit-4-Writeup" class="headerlink" title="MiniProject_PHP_Code_audit-4 Writeup"></a><strong>MiniProject_PHP_Code_audit-4 Writeup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>初始变量被赋值为string，所以打开就是输出”is_numeric(a) and is_numeric(b) error ！”，根据题目同时出现is_numeric()和and判断，引用暗羽表姐的博客截图来绕过第二个is_numeric() 判断，绕过 。<a id="more"></a></p>
+<h2 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h2><p>只是知道这是绕过的一种方式，但是为什么会出现这种情况呢，本来以为只要第一个判断为真就不会判断后面的条件正确还是不正确 ，以为问题出现在is_numeric，但是问题好像出现在and上面，根据PHP的优先级来看 赋值运算= 优先级大于 and 。<br>举一个例子：<br><img src="/Base_Img/web4/.png" alt="Alt text"><br>算是PHP的一种特性吧：<br><img src="/Base_Img/web4/5.png" alt="Alt text"></p>
+<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><pre><code>&lt;?php 
+$test = true and false;
+var_dump($test);
+
+$test2 = true &amp;&amp; false;
+var_dump($test2);
+?&gt;
+</code></pre><h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>初始变量被赋值为string，所以打开就是输出”is_numeric(a) and is_numeric(b) error ！”，根据题目同时出现is_numeric()和and判断（图一）<br><img src="/Base_Img/web4/1.png" alt="Alt text"><br>由于使用了and，出现了PHP解析优先级的问题，绕过。<br><img src="/Base_Img/web4/2.png" alt="Alt text"><br><img src="/Base_Img/web4/3.png" alt="Alt text"></p>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>由PHP小tip引发的思考（PHP优先级）：<a href="https://www.t00ls.net/viewthread.php?from=notice&amp;tid=42223" target="_blank" rel="external">https://www.t00ls.net/viewthread.php?from=notice&amp;tid=42223</a><br>CTF 之 PHP 黑魔法总结 ：<a href="http://www.zjicmisa.org/index.php/archives/112/" target="_blank" rel="external">http://www.zjicmisa.org/index.php/archives/112/</a><br>运算符优先级：<a href="http://php.net/manual/zh/language.operators.precedence.php" target="_blank" rel="external">http://php.net/manual/zh/language.operators.precedence.php</a></p>
 
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-miniproject-php-code-audit-4/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>MiniProject_PHP_Code_audit-4</a>
-    </h1>
-  
+
+    </div>
 
 
-    </header>
-  </div>
-</article>
 
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-miniproject-php-code-audit-3/" class="archive-article-date">
-  <i class="fa fa-calendar"></i>
-  <time  datetime="2017-09-17T15:05:01.000Z" itemprop="datePublished">9月 17</time>
-</a>
+
+
+
+
+    <footer class="article-footer">
+      
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-4/" data-id="cjbqe2p7i000bw6jkuqkzj6xl" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-4">分享到</a>
+      
 
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-miniproject-php-code-audit-3/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>MiniProject_PHP_Code_audit-3</a>
-    </h1>
-  
-
-
-    </header>
-  </div>
-</article>
-
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-miniproject-php-code-audit-2/" class="archive-article-date">
-  <i class="fa fa-calendar"></i>
-  <time  datetime="2017-09-17T15:04:59.000Z" itemprop="datePublished">9月 17</time>
-</a>
+        <a href="https://jianmou.github.io/jm-miniproject-php-code-audit-4/#disqus_thread" class="article-comment-link">评论</a>
+      
 
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-miniproject-php-code-audit-2/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>MiniProject_PHP_Code_audit-2</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP代码审计/">PHP代码审计</a></li></ul>
 
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/jm-miniproject-php-code-audit-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">← 上一篇</strong>
+      <div class="article-nav-title">MiniProject_PHP_Code_audit-3</div>
+    </a>
+  
+  
+    <a href="/jm-miniproject-php-code-audit-5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇 →</strong>
+      <div class="article-nav-title">
+        
+          MiniProject_PHP_Code_audit-5
+        
+      </div>
+    </a>
+  
+</nav>
+
+
+  
 </article>
 
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-miniproject-php-code-audit-1/" class="archive-article-date">
-  <i class="fa fa-calendar"></i>
-  <time  datetime="2017-09-17T15:04:58.000Z" itemprop="datePublished">9月 17</time>
-</a>
-
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-miniproject-php-code-audit-1/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>MiniProject_PHP_Code_audit-1</a>
-    </h1>
-  
 
 
-    </header>
-  </div>
-</article>
 
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-miniproject-essay-1/" class="archive-article-date">
-  <i class="fa fa-calendar"></i>
-  <time  datetime="2017-09-17T15:04:57.000Z" itemprop="datePublished">9月 17</time>
-</a>
-
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-miniproject-essay-1/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>依旧在路上</a>
-    </h1>
-  
-
-
-    </header>
-  </div>
-</article>
-
-  
-  
-    </div></section>
-  
-
+  <section class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
 
 </section>
       
@@ -804,11 +761,13 @@ $(document).on("click", "ul.archive-list li.archive-list-item", function () {
 <script>
   var disqus_shortname = 'rapcoder';
   
+  var disqus_url = 'https://jianmou.github.io/jm-miniproject-php-code-audit-4/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
