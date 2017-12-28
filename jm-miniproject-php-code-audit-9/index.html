@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,19 +8,24 @@
 
   
 
-  <title>关于我们 | 简眸</title>
+  <title>MiniProject_PHP_Code_audit-9 | 简眸</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简眸故事">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我们">
-<meta property="og:url" content="https://jianmou.github.io/about/index.html">
+  <meta name="description" content="MiniProject_PHP_Code_audit">
+<meta name="keywords" content="PHP代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MiniProject_PHP_Code_audit-9">
+<meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-9/index.html">
 <meta property="og:site_name" content="简眸">
-<meta property="og:description" content="简眸故事">
-<meta property="og:updated_time" content="2017-12-27T02:05:42.000Z">
+<meta property="og:description" content="MiniProject_PHP_Code_audit">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web9/1.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web9/2.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web9/3.png">
+<meta property="og:updated_time" content="2017-12-28T11:52:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于我们">
-<meta name="twitter:description" content="简眸故事">
+<meta name="twitter:title" content="MiniProject_PHP_Code_audit-9">
+<meta name="twitter:description" content="MiniProject_PHP_Code_audit">
+<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web9/1.png">
 
   
 
@@ -84,7 +88,6 @@
 
 
 
-
 <body>
 <div id="container">
   <div id="wrap">
@@ -137,14 +140,18 @@
 </header>
 
     <div class="outer">
-      <section id="main"><article   id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <section id="main"><article   id="post-jm-miniproject-php-code-audit-9" class="article article-type-post" itemscope itemprop="blogPost">
   <div data-scroll-reveal="enter top and over 0.7s"  class="article-meta">
-    <a  href="/about/index.html" class="article-date">
+    <a  href="/jm-miniproject-php-code-audit-9/" class="article-date">
   <i class="fa fa-calendar"></i>
-  <time  datetime="2017-06-26T23:47:10.000Z" itemprop="datePublished">2017-06-27</time>
+  <time  datetime="2017-09-17T15:05:07.000Z" itemprop="datePublished">2017-09-17</time>
 </a>
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MiniProject-PHP-Code-audit/">MiniProject_PHP_Code_audit</a>
+  </div>
+
 
   </div>
   <div class="article-inner"  >
@@ -156,7 +163,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      <i class="fa fa-pencil-square-o  article-title-icon"></i>关于我们
+      <i class="fa fa-pencil-square-o  article-title-icon"></i>MiniProject_PHP_Code_audit-9
     </h1>
   
 
@@ -171,7 +178,11 @@
         <span id="busuanzi_container_page_pv">
           阅读次数<span id="busuanzi_value_page_pv"></span>
         </span>
-        <h3 id="简眸故事"><a href="#简眸故事" class="headerlink" title="简眸故事"></a>简眸故事</h3>
+        <h1 id="MiniProject-PHP-Code-audit-9-Writeup"><a href="#MiniProject-PHP-Code-audit-9-Writeup" class="headerlink" title="MiniProject_PHP_Code_audit-9 Writeup"></a><strong>MiniProject_PHP_Code_audit-9 Writeup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>文件上传就一定是文件上传吗？【web思路】<a id="more"></a><br>前段时间遇到了一个web的真实场景，改编成了一道CTF题目，主要是给web提供一些思路，如果没遇到估计很难想象还会出现这样的代码出现。。。</p>
+<h2 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h2><p>文件上传不一定是文件上传，有可能涉及命令执行，给代码审计和渗透测试提供了新的思路。</p>
+<h2 id="测试代码：【如下图源代码】"><a href="#测试代码：【如下图源代码】" class="headerlink" title="测试代码：【如下图源代码】"></a>测试代码：【如下图源代码】</h2><p><img src="../Base_Img/web9/1.png" alt="Alt text"></p>
+<h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>从上面的代码可以看出整个流程为，用户通过前端上传文件，通过检测文件上传后的文件名，如果不是txt结束，如果是txt则将上传的文件移动到新的位置，然后执行tail命令，输出文本的最后一行内容。 流程是没有问题的，但是过于相信用户可控的输入，没有进行过滤导致出现命令执行漏洞。如果我们通过截断exec执行的命令，写入一个shell会怎么样呢？ 我们可以尝试将文件名构造一下1;echo ‘&lt;?php @eval($_POST[c]); ?&gt;’ &gt;1.php;1.txt【在windows不能这么命名，需要抓包改一下在上传】<br><img src="../Base_Img/web9/2.png" alt="Alt text"><br>这时候发现在目录下已经生成1.php的shell文件，链接后可以执行命令<br><img src="../Base_Img/web9/3.png" alt="Alt text"></p>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2>
       
 
     </div>
@@ -184,19 +195,40 @@
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/about/index.html" data-id="cjbqfpuxw00011djk3xi2gvvc" class="article-share-link" data-share="baidu" data-title="关于我们">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-9/" data-id="cjbqfpuyj000u1djka29qbczz" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-9">分享到</a>
       
 
       
-        <a href="https://jianmou.github.io/about/index.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://jianmou.github.io/jm-miniproject-php-code-audit-9/#disqus_thread" class="article-comment-link">评论</a>
       
 
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP代码审计/">PHP代码审计</a></li></ul>
+
 
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/jm-miniproject-php-code-audit-8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">← 上一篇</strong>
+      <div class="article-nav-title">MiniProject_PHP_Code_audit-8</div>
+    </a>
+  
+  
+    <a href="/jm-miniproject-php-code-audit-10/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇 →</strong>
+      <div class="article-nav-title">
+        
+          MiniProject_PHP_Code_audit-10
+        
+      </div>
+    </a>
+  
+</nav>
+
 
   
 </article>
@@ -720,7 +752,7 @@ $(document).on("click", "ul.archive-list li.archive-list-item", function () {
 <script>
   var disqus_shortname = 'rapcoder';
   
-  var disqus_url = 'https://jianmou.github.io/about/index.html';
+  var disqus_url = 'https://jianmou.github.io/jm-miniproject-php-code-audit-9/';
   
   (function(){
     var dsq = document.createElement('script');
@@ -814,10 +846,10 @@ MathJax.Hub.Queue(function() {
 
 <script src="/js/script.js"></script>
 
+
 </div>
 </body>
 </html>
-
 
 
 

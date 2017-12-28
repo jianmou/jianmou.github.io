@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,19 +8,26 @@
 
   
 
-  <title>关于我们 | 简眸</title>
+  <title>MiniProject_PHP_Code_audit-10 | 简眸</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简眸故事">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我们">
-<meta property="og:url" content="https://jianmou.github.io/about/index.html">
+  <meta name="description" content="MiniProject_PHP_Code_audit">
+<meta name="keywords" content="PHP代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MiniProject_PHP_Code_audit-10">
+<meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-10/index.html">
 <meta property="og:site_name" content="简眸">
-<meta property="og:description" content="简眸故事">
-<meta property="og:updated_time" content="2017-12-27T02:05:42.000Z">
+<meta property="og:description" content="MiniProject_PHP_Code_audit">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web10/1.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web10/2.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web10/3.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web10/4.png">
+<meta property="og:image" content="https://jianmou.github.io/Base_Img/web10/5.png">
+<meta property="og:updated_time" content="2017-12-28T11:57:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于我们">
-<meta name="twitter:description" content="简眸故事">
+<meta name="twitter:title" content="MiniProject_PHP_Code_audit-10">
+<meta name="twitter:description" content="MiniProject_PHP_Code_audit">
+<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web10/1.png">
 
   
 
@@ -84,7 +90,6 @@
 
 
 
-
 <body>
 <div id="container">
   <div id="wrap">
@@ -137,14 +142,18 @@
 </header>
 
     <div class="outer">
-      <section id="main"><article   id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <section id="main"><article   id="post-jm-miniproject-php-code-audit-10" class="article article-type-post" itemscope itemprop="blogPost">
   <div data-scroll-reveal="enter top and over 0.7s"  class="article-meta">
-    <a  href="/about/index.html" class="article-date">
+    <a  href="/jm-miniproject-php-code-audit-10/" class="article-date">
   <i class="fa fa-calendar"></i>
-  <time  datetime="2017-06-26T23:47:10.000Z" itemprop="datePublished">2017-06-27</time>
+  <time  datetime="2017-09-17T15:05:10.000Z" itemprop="datePublished">2017-09-17</time>
 </a>
 
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MiniProject-PHP-Code-audit/">MiniProject_PHP_Code_audit</a>
+  </div>
+
 
   </div>
   <div class="article-inner"  >
@@ -156,7 +165,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      <i class="fa fa-pencil-square-o  article-title-icon"></i>关于我们
+      <i class="fa fa-pencil-square-o  article-title-icon"></i>MiniProject_PHP_Code_audit-10
     </h1>
   
 
@@ -171,7 +180,11 @@
         <span id="busuanzi_container_page_pv">
           阅读次数<span id="busuanzi_value_page_pv"></span>
         </span>
-        <h3 id="简眸故事"><a href="#简眸故事" class="headerlink" title="简眸故事"></a>简眸故事</h3>
+        <h1 id="MiniProject-PHP-Code-audit-10-Writeup"><a href="#MiniProject-PHP-Code-audit-10-Writeup" class="headerlink" title="MiniProject_PHP_Code_audit-10 Writeup"></a><strong>MiniProject_PHP_Code_audit-10 Writeup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>这是当时高校安全运维赛的一道题目，一直没有时间来整理，前段时间刚好又看到了这个源代码，给大家提供一些CTF中的思路.<a id="more"></a><br>用户需要输入一个page参数，作为程序员，会希望您访问到Y29uZmln.php中的phpinfo信息，但是攻击者可以获取源代码。</p>
+<h2 id="考点：文件上传的一点思路【web思路】"><a href="#考点：文件上传的一点思路【web思路】" class="headerlink" title="考点：文件上传的一点思路【web思路】"></a>考点：文件上传的一点思路【web思路】</h2><h2 id="测试代码：源代码如下"><a href="#测试代码：源代码如下" class="headerlink" title="测试代码：源代码如下"></a>测试代码：源代码如下</h2><p><img src="../Base_Img/web10/1.png" alt="Alt text"></p>
+<h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>梳理一遍逻辑：<br>默认role为guest，auth为false，如果获取不到cookie里面的role值就将guest的值序列化后在base64编码后放到cookie中并输出”Sorry. You have no permissions.”，如果获取到cookie里面的值就将值反序列化后用base64解码如果为admin则开始获取post提交的filename参数和data参数的值，如果data参数中带有[&lt;&gt;?]就输出’No No No!’，如果输入的是一个数组，就是先拼接这个数组，然后匹配里面是否存在[&lt;&gt;?]，如果存在，就可以得到正确的flag了。<br><img src="../Base_Img/web10/2.png" alt="Alt text"><br><img src="../Base_Img/web10/3.png" alt="Alt text"><br><img src="../Base_Img/web10/4.png" alt="Alt text"><br><img src="../Base_Img/web10/5.png" alt="Alt text"><br>这里主要关心的是逻辑，使用数组的时候既可以满足源代码的一切条件~ 刚开始没看到代码的时候还以为是file_put_content函数呢0.0.</p>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>Pwnhub 第一次线下沙龙竞赛Web题解析:<a href="https://www.leavesongs.com/PENETRATION/pwnhub-first-shalon-ctf-web-writeup.html" target="_blank" rel="external">https://www.leavesongs.com/PENETRATION/pwnhub-first-shalon-ctf-web-writeup.html</a></p>
+
       
 
     </div>
@@ -184,19 +197,31 @@
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/about/index.html" data-id="cjbqfpuxw00011djk3xi2gvvc" class="article-share-link" data-share="baidu" data-title="关于我们">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-10/" data-id="cjbqfpuy200061djkq8mekwem" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-10">分享到</a>
       
 
       
-        <a href="https://jianmou.github.io/about/index.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://jianmou.github.io/jm-miniproject-php-code-audit-10/#disqus_thread" class="article-comment-link">评论</a>
       
 
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP代码审计/">PHP代码审计</a></li></ul>
+
 
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/jm-miniproject-php-code-audit-9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">← 上一篇</strong>
+      <div class="article-nav-title">MiniProject_PHP_Code_audit-9</div>
+    </a>
+  
+  
+</nav>
+
 
   
 </article>
@@ -720,7 +745,7 @@ $(document).on("click", "ul.archive-list li.archive-list-item", function () {
 <script>
   var disqus_shortname = 'rapcoder';
   
-  var disqus_url = 'https://jianmou.github.io/about/index.html';
+  var disqus_url = 'https://jianmou.github.io/jm-miniproject-php-code-audit-10/';
   
   (function(){
     var dsq = document.createElement('script');
@@ -814,10 +839,10 @@ MathJax.Hub.Queue(function() {
 
 <script src="/js/script.js"></script>
 
+
 </div>
 </body>
 </html>
-
 
 
 
