@@ -18,15 +18,15 @@
 <meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-5/index.html">
 <meta property="og:site_name" content="简眸">
 <meta property="og:description" content="MiniProject_PHP_Code_audit">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web1/1.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web1/2.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web1/3.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web1/4.png">
-<meta property="og:updated_time" content="2017-12-28T08:51:50.000Z">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/5_1.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/5_2.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/5_3.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/5_4.png">
+<meta property="og:updated_time" content="2018-01-02T03:56:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MiniProject_PHP_Code_audit-5">
 <meta name="twitter:description" content="MiniProject_PHP_Code_audit">
-<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web1/1.png">
+<meta name="twitter:image" content="http://p1wq82j1w.bkt.clouddn.com/5_1.png">
 
   
 
@@ -181,7 +181,7 @@
         </span>
         <h1 id="MiniProject-PHP-Code-audit-5-Writeup"><a href="#MiniProject-PHP-Code-audit-5-Writeup" class="headerlink" title="MiniProject_PHP_Code_audit-5 Writeup"></a><strong>MiniProject_PHP_Code_audit-5 Writeup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>PHP官方文档描述了这样的一种场景，当您在include语句中使用输入变量而没有正确的输入验证时，会发生LFI和RFI漏洞。<a id="more"></a><br>用户需要输入一个page参数，作为程序员，会希望您访问到Y29uZmln.php中的phpinfo信息，但是攻击者可以获取源代码。</p>
 <h2 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h2><p>php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。<br>这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， 在数据流内容读取之前没有机会应用其他过滤器。<br>php://filter 目标使用以下的参数作为它路径的一部分。 复合过滤链能够在一个路径上指定。</p>
-<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>打开页面查看源代码发现注释（图一）<br><img src="/Base_Img/web1/1.png" alt="Alt text"><br>访问Y29uZmln.php发现执行了phpinfo();（图二）<br><img src="/Base_Img/web1/2.png" alt="Alt text"><br>但是没有flag，通过php://filter获取Y29uZmln.php源代码（图三）<br><img src="/Base_Img/web1/3.png" alt="Alt text"><br>Base64解密后得到flag（图四）。<br><img src="/Base_Img/web1/4.png" alt="Alt text"></p>
+<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>打开页面查看源代码发现注释（图一）<br><img src="http://p1wq82j1w.bkt.clouddn.com/5_1.png" alt="Alt text"><br>访问Y29uZmln.php发现执行了phpinfo();（图二）<br><img src="http://p1wq82j1w.bkt.clouddn.com/5_2.png" alt="Alt text"><br>但是没有flag，通过php://filter获取Y29uZmln.php源代码（图三）<br><img src="http://p1wq82j1w.bkt.clouddn.com/5_3.png" alt="Alt text"><br>Base64解密后得到flag（图四）。<br><img src="http://p1wq82j1w.bkt.clouddn.com/5_4.png" alt="Alt text"></p>
 <h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>PHP 手册：<a href="http://php.net/manual/zh/function.include.php" target="_blank" rel="external">http://php.net/manual/zh/function.include.php</a><br>谈一谈php://filter的妙用-Phithon：<a href="https://www.leavesongs.com/PENETRATION/php-filter-magic.html" target="_blank" rel="external">https://www.leavesongs.com/PENETRATION/php-filter-magic.html</a></p>
 
       
@@ -196,7 +196,7 @@
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-5/" data-id="cjbx248zg000fu0jkrhhauisj" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-5">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-5/" data-id="cjbx8kmes000dxhjkjv187s7v" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-5">分享到</a>
       
 
       

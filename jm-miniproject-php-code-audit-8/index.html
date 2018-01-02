@@ -18,14 +18,14 @@
 <meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-8/index.html">
 <meta property="og:site_name" content="简眸">
 <meta property="og:description" content="MiniProject_PHP_Code_audit">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web8/1.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web8/2.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web8/3.png">
-<meta property="og:updated_time" content="2017-12-28T11:50:17.000Z">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/8_1.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/8_2.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/8_3.png">
+<meta property="og:updated_time" content="2018-01-02T06:08:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MiniProject_PHP_Code_audit-8">
 <meta name="twitter:description" content="MiniProject_PHP_Code_audit">
-<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web8/1.png">
+<meta name="twitter:image" content="http://p1wq82j1w.bkt.clouddn.com/8_1.png">
 
   
 
@@ -186,8 +186,8 @@ var_dump($test);
 $b = array(&apos;test&apos; =&gt; &apos;hahahaha&apos;);
 extract($b);
 var_dump($test);
-</code></pre><p>结果如下：<br><img src="../Base_Img/web8/1.png" alt="Alt text"></p>
-<h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>源代码【下图】：<br><img src="../Base_Img/web8/2.png" alt="Alt text"><br>在第五行, 运用了extract()函数, 将GET方式获得的变量导入到当前的符号表中. 然后判断$attempt与$从$filename处理后得到的变量，两个变量的内容是否相等. $combination变量储存的是flag.txt的内容. 但是我们并不能查看test.txt, 所以并不知道该怎么去设置$attempt的值. 但是, 由于extract()函数的不足之处, 导致这段代码存在一个变量覆盖漏洞. 只要我们这样构造url【图二】<br><img src="../Base_Img/web8/3.png" alt="Alt text"><br>那么, 我们可以发现, $attempt变量和$combination变量的内容都会被设置成空字符串. 这样, $attempt===$combination的判断就成立了, 我们就能成功地拿到flag.txt的内容.</p>
+</code></pre><p>结果如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/8_1.png" alt="Alt text"></p>
+<h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>源代码【下图】：<br><img src="http://p1wq82j1w.bkt.clouddn.com/8_2.png" alt="Alt text"><br>在第五行, 运用了extract()函数, 将GET方式获得的变量导入到当前的符号表中. 然后判断$attempt与$从$filename处理后得到的变量，两个变量的内容是否相等. $combination变量储存的是flag.txt的内容. 但是我们并不能查看test.txt, 所以并不知道该怎么去设置$attempt的值. 但是, 由于extract()函数的不足之处, 导致这段代码存在一个变量覆盖漏洞. 只要我们这样构造url【图二】<br><img src="http://p1wq82j1w.bkt.clouddn.com/8_3.png" alt="Alt text"><br>那么, 我们可以发现, $attempt变量和$combination变量的内容都会被设置成空字符串. 这样, $attempt===$combination的判断就成立了, 我们就能成功地拿到flag.txt的内容.</p>
 <h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>PHP extract() 函数：<a href="http://www.w3school.com.cn/php/func_array_extract.asp" target="_blank" rel="external">http://www.w3school.com.cn/php/func_array_extract.asp</a><br>extract()函数导致的变量覆盖漏洞：<a href="http://blog.sina.com.cn/s/blog_15db60e8e0102wndj.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_15db60e8e0102wndj.html</a></p>
 
       
@@ -202,7 +202,7 @@ var_dump($test);
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-8/" data-id="cjbx248zo000ru0jk3b6q5xtq" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-8">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-8/" data-id="cjbx8kmey000oxhjkblibco0o" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-8">分享到</a>
       
 
       

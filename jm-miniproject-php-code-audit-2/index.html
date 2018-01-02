@@ -18,16 +18,16 @@
 <meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-2/index.html">
 <meta property="og:site_name" content="简眸">
 <meta property="og:description" content="MiniProject_PHP_Code_audit">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web2/1.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web2/2.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web2/3.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web2/4.png">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web2/5.png">
-<meta property="og:updated_time" content="2017-12-28T08:47:50.000Z">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/2_1.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/2_2.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/2_3.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/2_4.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/2_5.png">
+<meta property="og:updated_time" content="2018-01-02T03:49:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MiniProject_PHP_Code_audit-2">
 <meta name="twitter:description" content="MiniProject_PHP_Code_audit">
-<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web2/1.png">
+<meta name="twitter:image" content="http://p1wq82j1w.bkt.clouddn.com/2_1.png">
 
   
 
@@ -181,7 +181,7 @@
           阅读次数<span id="busuanzi_value_page_pv"></span>
         </span>
         <h1 id="MiniProject-PHP-Code-audit-2-riteup"><a href="#MiniProject-PHP-Code-audit-2-riteup" class="headerlink" title="MiniProject_PHP_Code_audit-2 riteup"></a><strong>MiniProject_PHP_Code_audit-2 riteup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>用户传入字符串类型的值和后台的’cab56ab0de5376d2a0c73307ea011da4’值做比较，如果相等，输出flag。<a id="more"></a></p>
-<h2 id="考点：PHP黑魔法–strcmp"><a href="#考点：PHP黑魔法–strcmp" class="headerlink" title="考点：PHP黑魔法–strcmp"></a>考点：PHP黑魔法–strcmp</h2><p>strcmp — 二进制安全字符串比较，如果 str1 小于 str2 返回 &lt; 0； 如果 str1 大于 str2 返回 &gt; 0；如果两者相等，返回 0。<br>php官方在后面的版本中修复了这个漏洞，使得报错的时候函数不返回任何值。<br>strcmp只会处理字符串参数，如果给个数组的话呢，就会返回NULL,而判断使用的是==，NULL==0是 bool(true)<br><img src="/Base_Img/web2/1.png" alt="Alt text"><br>实际测试如下：<br>PHP5.2.1版本中使用strcmp比较数组和字符串时候会返回 int(1)<br><img src="/Base_Img/web2/2.png" alt="Alt text"><br>PHP5.3版本中使用strcmp比较数组和字符串时候会返回 null<br><img src="/Base_Img/web2/3.png" alt="Alt text"></p>
+<h2 id="考点：PHP黑魔法–strcmp"><a href="#考点：PHP黑魔法–strcmp" class="headerlink" title="考点：PHP黑魔法–strcmp"></a>考点：PHP黑魔法–strcmp</h2><p>strcmp — 二进制安全字符串比较，如果 str1 小于 str2 返回 &lt; 0； 如果 str1 大于 str2 返回 &gt; 0；如果两者相等，返回 0。<br>php官方在后面的版本中修复了这个漏洞，使得报错的时候函数不返回任何值。<br>strcmp只会处理字符串参数，如果给个数组的话呢，就会返回NULL,而判断使用的是==，NULL==0是 bool(true)<br><img src="http://p1wq82j1w.bkt.clouddn.com/2_1.png" alt="Alt text"><br>实际测试如下：<br>PHP5.2.1版本中使用strcmp比较数组和字符串时候会返回 int(1)<br><img src="http://p1wq82j1w.bkt.clouddn.com/2_2.png" alt="Alt text"><br>PHP5.3版本中使用strcmp比较数组和字符串时候会返回 null<br><img src="http://p1wq82j1w.bkt.clouddn.com/2_3.png" alt="Alt text"></p>
 <h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><pre><code>&lt;?php 
     if(null){
         echo &apos;test&apos;;
@@ -201,8 +201,8 @@
         echo &apos;cba&apos;;
     }
 ?&gt;
-</code></pre><p>结果如下：<br><img src="/Base_Img/web2/4.png" alt="Alt text"></p>
-<h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>访问：<a href="http://localhost/MiniProject_PHP_Code_audit/Web2/index.php?password[]=123" target="_blank" rel="external">http://localhost/MiniProject_PHP_Code_audit/Web2/index.php?password[]=123</a><br><img src="/Base_Img/web2/5.png" alt="Alt text"></p>
+</code></pre><p>结果如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/2_4.png" alt="Alt text"></p>
+<h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>访问：<a href="http://localhost/MiniProject_PHP_Code_audit/Web2/index.php?password[]=123" target="_blank" rel="external">http://localhost/MiniProject_PHP_Code_audit/Web2/index.php?password[]=123</a><br><img src="http://p1wq82j1w.bkt.clouddn.com/2_5.png" alt="Alt text"></p>
 <h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>CTF之PHP黑魔法总结：<a href="http://www.am0s.com/ctf/128.html" target="_blank" rel="external">http://www.am0s.com/ctf/128.html</a><br>PHP 手册 ：<a href="http://php.net/manual/zh/function.strcmp.php" target="_blank" rel="external">http://php.net/manual/zh/function.strcmp.php</a></p>
 
       
@@ -217,7 +217,7 @@
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-2/" data-id="cjbx248zb0009u0jkdxpoa6b5" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-2">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-2/" data-id="cjbx8kmf1000uxhjk469e9hzl" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-2">分享到</a>
       
 
       
