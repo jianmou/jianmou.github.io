@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/8_1.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/8_2.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/8_3.png">
-<meta property="og:updated_time" content="2018-01-02T06:08:43.000Z">
+<meta property="og:updated_time" content="2018-01-03T14:05:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MiniProject_PHP_Code_audit-8">
 <meta name="twitter:description" content="MiniProject_PHP_Code_audit">
@@ -179,7 +179,7 @@
           阅读次数<span id="busuanzi_value_page_pv"></span>
         </span>
         <h1 id="MiniProject-PHP-Code-audit-8-Writeup"><a href="#MiniProject-PHP-Code-audit-8-Writeup" class="headerlink" title="MiniProject_PHP_Code_audit-8 Writeup"></a><strong>MiniProject_PHP_Code_audit-8 Writeup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>GET方式获得的变量导入到当前的符号表中. 然后判断$attempt与$从$filename处理后得到的变量，两个变量的内容是否相等，如果相等输出flag。<a id="more"></a></p>
-<h2 id="考点：extract变量覆盖"><a href="#考点：extract变量覆盖" class="headerlink" title="考点：extract变量覆盖"></a>考点：extract变量覆盖</h2><p>变量覆盖指的是用我们自定义的参数值替换程序原有的变量值。经常引发变量覆盖漏洞的函数有：extract(),parse_str()和import_request_variables()。</p>
+<h2 id="考点：extract变量覆盖"><a href="#考点：extract变量覆盖" class="headerlink" title="考点：extract变量覆盖"></a>考点：extract变量覆盖</h2><p>变量覆盖指的是用我们自定义的参数值替换程序原有的变量值。经常引发变量覆盖漏洞的函数有：extract(),parse_str()和import_request_variables()。<br>extract(array,extract_rules,prefix),extract() 函数从数组中将变量导入到当前的符号表。对于数组中的每个元素，键名用于变量名，键值用于变量值。</p>
 <h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><pre><code>$test = 1;
 var_dump($test);
 
@@ -202,7 +202,7 @@ var_dump($test);
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-8/" data-id="cjbyf219i000kdijka3o8dh7i" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-8">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-8/" data-id="cjbz4yb5a000pqjjkptlquxbx" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-8">分享到</a>
       
 
       
