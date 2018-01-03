@@ -18,18 +18,18 @@
 <meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-7/index.html">
 <meta property="og:site_name" content="简眸">
 <meta property="og:description" content="MiniProject_PHP_Code_audit">
-<meta property="og:image" content="https://jianmou.github.io/Base_Img/web7/7.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/7_7.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/7_1.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/7_2.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/7_3.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/7_4.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/7_5.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/7_6.png">
-<meta property="og:updated_time" content="2018-01-02T03:59:17.000Z">
+<meta property="og:updated_time" content="2018-01-03T14:10:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MiniProject_PHP_Code_audit-7">
 <meta name="twitter:description" content="MiniProject_PHP_Code_audit">
-<meta name="twitter:image" content="https://jianmou.github.io/Base_Img/web7/7.png">
+<meta name="twitter:image" content="http://p1wq82j1w.bkt.clouddn.com/7_7.png">
 
   
 
@@ -189,7 +189,7 @@
 }
 $file = new Read;
 echo serialize($file);  
-</code></pre><p>结果为序列化字符串【如图】：<br><img src="../Base_Img/web7/7.png" alt="Alt text"></p>
+</code></pre><p>结果为序列化字符串【如图】：<br><img src="http://p1wq82j1w.bkt.clouddn.com/7_7.png" alt="Alt text"></p>
 <h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>借鉴大佬的思路，<br>这个题目考察的是php封装协议和lfi【图一为index.php，图二为class.php】<br><img src="http://p1wq82j1w.bkt.clouddn.com/7_1.png" alt="Alt text"><br><img src="http://p1wq82j1w.bkt.clouddn.com/7_2.png" alt="Alt text"><br>这个题目首先要突破的是：if(isset($user)&amp;&amp;(file_get_contents($user,’r’)===”the user is admin”)) 如何让file_get_contents($user,’r’)===”the user is admin”呢？ 答案是用php的封装协议php://input，因为php：//input可以得到原始的post数据【图三】：<br><img src="http://p1wq82j1w.bkt.clouddn.com/7_3.png" alt="Alt text"><br>然后我到了：include($file); //class.php 这一步 这个很明显是暗示你去读取class.php 如何读呢？这里用到php的另一个封装协议：php://filter 利用这个协议就可以读取任意文件了 利用方法：php://filter/convert.base64-encode/resource=index.php 这里把读取到的index.php的内容转换为base64的格式【图四】<br><img src="http://p1wq82j1w.bkt.clouddn.com/7_4.png" alt="Alt text"><br>但是class.php把我们引入到另一个地方，就是利用反序列化来读取flag文件 于是我们构造反序列化的参数【反序列化后续再讲】： <a href="http://localhost/ctf/index.php?user=php://input&amp;file=class.php&amp;pass=O:4:&quot;Read&quot;:1:{s:4:&quot;file&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=f1aG.php&quot;;}" target="_blank" rel="external">http://localhost/ctf/index.php?user=php://input&amp;file=class.php&amp;pass=O:4:&quot;Read&quot;:1:{s:4:&quot;file&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=f1aG.php&quot;;}</a> 这里也是利用php://filter来读取flag文件【图五，图六】<br><img src="http://p1wq82j1w.bkt.clouddn.com/7_5.png" alt="Alt text"><br><img src="http://p1wq82j1w.bkt.clouddn.com/7_6.png" alt="Alt text"></p>
 <h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>PHP-file_get_contents：<a href="http://php.net/manual/zh/function.file-get-contents.php" target="_blank" rel="external">http://php.net/manual/zh/function.file-get-contents.php</a><br>PHP-preg_match：<a href="http://php.net/manual/zh/function.preg-match.php" target="_blank" rel="external">http://php.net/manual/zh/function.preg-match.php</a><br>LFI、RFI、PHP封装协议安全问题学习：<a href="http://www.cnblogs.com/LittleHann/p/3665062.html" target="_blank" rel="external">http://www.cnblogs.com/LittleHann/p/3665062.html</a><br>2016xctf一道ctf题目：<a href="http://blog.csdn.net/niexinming/article/details/52623790" target="_blank" rel="external">http://blog.csdn.net/niexinming/article/details/52623790</a><br>php 伪协议：<a href="http://blog.csdn.net/Ni9htMar3/article/details/69812306?locationNum=2&amp;fps=1" target="_blank" rel="external">http://blog.csdn.net/Ni9htMar3/article/details/69812306?locationNum=2&amp;fps=1</a><br>php伪协议实现命令执行的七种姿势：<a href="http://www.freebuf.com/column/148886.html" target="_blank" rel="external">http://www.freebuf.com/column/148886.html</a></p>
 
@@ -205,7 +205,7 @@ echo serialize($file);
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-7/" data-id="cjbz4yb56000hqjjkc1vxbd12" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-7">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-7/" data-id="cjbz543c7000lrgjk3k6jp1lw" class="article-share-link" data-share="baidu" data-title="MiniProject_PHP_Code_audit-7">分享到</a>
       
 
       
