@@ -8,24 +8,18 @@
 
   
 
-  <title>CTF中PHP代码审计小tips-3 | 简眸</title>
+  <title>Category: Wooyun_PHP_Code_audit | 简眸</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="MiniProject_PHP_Code_audit">
-<meta name="keywords" content="VulnCTF | PHP代码审计">
-<meta property="og:type" content="article">
-<meta property="og:title" content="CTF中PHP代码审计小tips-3">
-<meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-3/index.html">
+  <meta name="description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
+<meta property="og:type" content="website">
+<meta property="og:title" content="简眸">
+<meta property="og:url" content="https://jianmou.github.io/categories/Wooyun-PHP-Code-audit/index.html">
 <meta property="og:site_name" content="简眸">
-<meta property="og:description" content="MiniProject_PHP_Code_audit">
-<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/3_1.png">
-<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/3_2.png">
-<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/3_3.png">
-<meta property="og:updated_time" content="2018-01-29T14:16:53.000Z">
+<meta property="og:description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CTF中PHP代码审计小tips-3">
-<meta name="twitter:description" content="MiniProject_PHP_Code_audit">
-<meta name="twitter:image" content="http://p1wq82j1w.bkt.clouddn.com/3_1.png">
+<meta name="twitter:title" content="简眸">
+<meta name="twitter:description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
 
   
 
@@ -140,112 +134,44 @@
 </header>
 
     <div class="outer">
-      <section id="main"><article   id="post-jm-miniproject-php-code-audit-3" class="article article-type-post" itemscope itemprop="blogPost">
-  <div data-scroll-reveal="enter top and over 0.7s"  class="article-meta">
-    <a  href="/jm-miniproject-php-code-audit-3/" class="article-date">
+      <section id="main">
+  
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap"  data-scroll-reveal="enter left and over 0.7s">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div  class="archive-article-inner">
+    <header class="archive-article-header">
+      <a  href="/jm-wooyun-php-code-audit-1/" class="archive-article-date">
   <i class="fa fa-calendar"></i>
-  <time  datetime="2017-09-17T15:05:01.000Z" itemprop="datePublished">2017-09-17</time>
+  <time  datetime="2017-09-17T15:05:10.000Z" itemprop="datePublished">9月 17</time>
 </a>
 
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/MiniProject-PHP-Code-audit/">MiniProject_PHP_Code_audit</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner"  >
-    
-    
-
-      <header class="article-header">
-
-        
+      
   
-    <h1 class="article-title" itemprop="name">
-      <i class="fa fa-pencil-square-o  article-title-icon"></i>CTF中PHP代码审计小tips-3
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/jm-wooyun-php-code-audit-1/">
+        <i class="fa fa-pencil-square-o  article-title-icon"></i>Wooyun-PHP代码审计小案例-1</a>
     </h1>
   
 
 
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-        </br>
-        <span id="busuanzi_container_page_pv">
-          阅读次数<span id="busuanzi_value_page_pv"></span>
-        </span>
-        <h1 id="MiniProject-PHP-Code-audit-3-Writeup"><a href="#MiniProject-PHP-Code-audit-3-Writeup" class="headerlink" title="MiniProject_PHP_Code_audit-3 Writeup"></a><strong>MiniProject_PHP_Code_audit-3 Writeup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>这段代码的逻辑是用户输入username和password两个参数，如果username和password的值不相等，再判断username和password字符串的 sha1 散列值与类型是否相等，如果相等才输出flag值。<a id="more"></a></p>
-<h2 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h2><p>这段代码中有一个逻辑点，怎么样使的两个值不相等，但是sha1()后的值相等。===会比较类型，比如bool sha1()函数和md5()函数存在着漏洞，sha1()函数默认的传入参数类型是字符串型，那要是给它传入数组呢会出现错误，使sha1()函数返回错误，也就是返回false，这样一来===运算符就可以发挥作用了，需要构造username和password既不相等，又同样是数组类型。</p>
-<ol>
-<li>=== 在进行比较的时候，会先判断两种字符串的类型是否相等，再比较。 </li>
-<li>== 在进行比较的时候，会先将字符串类型转化成相同，再比较。<br>PS：URL可以传递数组参数，形式是链接：xxx.com?x[]=1&amp;x[]=2&amp;x[]=3<br>这样就提交了一个x[]={1,2,3}的数组。 如果使用sha1对一个数组进行加密，返回的将是NULL，NULL===NULL。</li>
-</ol>
-<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><p>通过打印出传入的值以及类型，以及sha()后的值和类型看看如何绕过：<br>    <img src="http://p1wq82j1w.bkt.clouddn.com/3_1.png" alt="Alt text"><br>    <img src="http://p1wq82j1w.bkt.clouddn.com/3_2.png" alt="Alt text"></p>
-<h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>分析代码逻辑，发现GET了两个字段username和password，获得flag要求的条件是：username != password &amp; sha1(username) == sha1(password)，可以利用sha1()函数的漏洞来绕过。<br>如果把这两个字段构造为数组，如：?name[]=a&amp;password[]=q，这样在第一处判断时两数组确实是不同的，但在PHP中，sha1 是不能处理数组的，sha1(数组)会返回null，所以sha1 (a[])==null,sha1 (b[])==null，sha1 (a[])=sha1 (b[])=null,这样就可以了。<br>在第二处判断时由于sha1()函数无法处理数组类型，将报错并返回false，if 条件成立，获得flag。经验证md5()函数同样存在此漏洞。<br>index.php?username[]=1&amp;password[]=9<br><img src="http://p1wq82j1w.bkt.clouddn.com/3_3.png" alt="Alt text"></p>
-<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>PHP手册：<a href="http://php.net/manual/zh/function.sha1.php" target="_blank" rel="external">http://php.net/manual/zh/function.sha1.php</a><br>php 弱类型总结：<a href="http://www.cnblogs.com/Mrsm1th/p/6745532.html" target="_blank" rel="external">http://www.cnblogs.com/Mrsm1th/p/6745532.html</a></p>
-
-      
-
-    </div>
-
-
-
-
-
-
-
-    <footer class="article-footer">
-      
-        <a data-url="https://jianmou.github.io/jm-miniproject-php-code-audit-3/" data-id="cjd0uxm8h0006objkpjt962m5" class="article-share-link" data-share="baidu" data-title="CTF中PHP代码审计小tips-3">分享到</a>
-      
-
-      
-        <a href="https://jianmou.github.io/jm-miniproject-php-code-audit-3/#disqus_thread" class="article-comment-link">评论</a>
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VulnCTF-PHP代码审计/">VulnCTF | PHP代码审计</a></li></ul>
-
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/jm-miniproject-php-code-audit-2/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">← 上一篇</strong>
-      <div class="article-nav-title">CTF中PHP代码审计小tips-2</div>
-    </a>
-  
-  
-    <a href="/jm-miniproject-php-code-audit-4/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇 →</strong>
-      <div class="article-nav-title">
-        
-          CTF中PHP代码审计小tips-4
-        
-      </div>
-    </a>
-  
-</nav>
-
-
-  
 </article>
 
-
-
-
-  <section class="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-  </section>
+  
+  
+    </div></section>
+  
 
 </section>
       
@@ -757,13 +683,11 @@ $(document).on("click", "ul.archive-list li.archive-list-item", function () {
 <script>
   var disqus_shortname = 'rapcoder';
   
-  var disqus_url = 'https://jianmou.github.io/jm-miniproject-php-code-audit-3/';
-  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
