@@ -18,10 +18,22 @@
 <meta property="og:url" content="https://jianmou.github.io/jm-wooyun-php-code-audit-2/index.html">
 <meta property="og:site_name" content="简眸">
 <meta property="og:description" content="Wooyun_PHP_Code_audit">
-<meta property="og:updated_time" content="2018-02-01T23:40:03.000Z">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_1.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_2.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_3.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_4.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_5.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_6.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_7.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_8.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_9.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_10.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/12_11.png">
+<meta property="og:updated_time" content="2018-02-01T23:54:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Wooyun-PHP代码审计小案例-2">
 <meta name="twitter:description" content="Wooyun_PHP_Code_audit">
+<meta name="twitter:image" content="http://p1wq82j1w.bkt.clouddn.com/12_1.png">
 
   
 
@@ -175,21 +187,12 @@
           阅读次数<span id="busuanzi_value_page_pv"></span>
         </span>
         <h1 id="BlueCMS-v1-6-sp1-guest-book-php-SQL注入漏洞"><a href="#BlueCMS-v1-6-sp1-guest-book-php-SQL注入漏洞" class="headerlink" title="BlueCMS v1.6 sp1 guest_book.php SQL注入漏洞"></a><strong>BlueCMS v1.6 sp1 guest_book.php SQL注入漏洞</strong></h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>上一篇提到了Wooyun审计案例 - BlueCMS v1.6 sp1 ad_js.php SQL注入漏洞，由于下载了整套源码，所以找找其他的源码，不过网上有人好像发现了一个比较偏一些注入方式。<a id="more"></a><br>针对于 BlueCMS v1.6 sp1 guest_book.php SQL注入漏洞，找到了源码，结合着别人的思路静态审计+动态调试，给大家留下一些思经验。</p>
-<h2 id="Tip：getenv的忽略"><a href="#Tip：getenv的忽略" class="headerlink" title="Tip：getenv的忽略"></a>Tip：getenv的忽略</h2><p>注入点出现在comment.php页面，我们先看最前面一些参数和引入的文件：</p>
-<p>这里引入了/include/common.inc.php文件，里面有这样的一个处理</p>
-<p>跟进deep_addslashes()函数，发现是对函数deep_addslashes()的封装，通俗地讲就是转义了，防止恶意闭合拼接的SQL语句的注入攻击。</p>
-<p>这样其实就已经过滤了绝大多数的参数注入，但是还会有两种情况，第一种是上篇文章提到的SQL语句拼接的时候参数要用单引号包裹，如果没有包裹就做强制类型转换，第二种就是未被过滤的可控参数，详细代码如下：</p>
-<p>在这里我们关注两个SQL语句拼接的地方，第一个是<br><code>$sql = &quot;INSERT INTO &quot;.table(&#39;comment&#39;).&quot; (com_id, post_id, user_id, type, mood, content, pub_date, ip, is_check) 
-      VALUES (&#39;&#39;, &#39;$id&#39;, &#39;$user_id&#39;, &#39;$type&#39;, &#39;$mood&#39;, &#39;$content&#39;, &#39;$timestamp&#39;, &#39;&quot;.getip().&quot;&#39;, &#39;$is_check&#39;)&quot;;</code><br>这里可控的参数都已经被转义或者强制类型转换，但是有一个getip()函数，我们跟进后代码如下：</p>
+<h2 id="Tip：getenv的忽略"><a href="#Tip：getenv的忽略" class="headerlink" title="Tip：getenv的忽略"></a>Tip：getenv的忽略</h2><p>注入点出现在comment.php页面，我们先看最前面一些参数和引入的文件：<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_1.png" alt="Alt text"><br>这里引入了/include/common.inc.php文件，里面有这样的一个处理<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_2.png" alt="Alt text"><br>跟进deep_addslashes()函数，发现是对函数deep_addslashes()的封装，通俗地讲就是转义了，防止恶意闭合拼接的SQL语句的注入攻击。<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_3.png" alt="Alt text"><br>这样其实就已经过滤了绝大多数的参数注入，但是还会有两种情况，第一种是上篇文章提到的SQL语句拼接的时候参数要用单引号包裹，如果没有包裹就做强制类型转换，第二种就是未被过滤的可控参数，详细代码如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_4.png" alt="Alt text"><br>在这里我们关注两个SQL语句拼接的地方，第一个是<br><code>$sql = &quot;INSERT INTO &quot;.table(&#39;comment&#39;).&quot; (com_id, post_id, user_id, type, mood, content, pub_date, ip, is_check) 
+      VALUES (&#39;&#39;, &#39;$id&#39;, &#39;$user_id&#39;, &#39;$type&#39;, &#39;$mood&#39;, &#39;$content&#39;, &#39;$timestamp&#39;, &#39;&quot;.getip().&quot;&#39;, &#39;$is_check&#39;)&quot;;</code><br>这里可控的参数都已经被转义或者强制类型转换，但是有一个getip()函数，我们跟进后代码如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_5.png" alt="Alt text"></p>
 <blockquote>
-<p>提示：<br>  getenv 取得系统的环境变量，环境变量的格式为name=value。<br>  $_SERVER是服务器超级全局变量数组<br>  二者的区别在于，getenv不支持IIS的isapi方式运行的PHP。<br>在这里我们可以看到所有的getenv()取到的参数都没有做处理，可以进行注入。<br>具体参考这篇文章：<a href="https://chybeta.github.io/2017/03/14/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BSQL%E6%B3%A8%E5%85%A5%EF%BC%9ABlueCMSv1-6-sp1/" target="_blank" rel="external">BlueCMS v1.6 sp1 ad_js.php SQL注入漏洞</a><br>不过不知道为什么我访问comment页面为空（有明白的大佬可以和我说一声）</p>
+<p>提示：<br>  getenv 取得系统的环境变量，环境变量的格式为name=value。<br>  $_SERVER是服务器超级全局变量数组<br>  二者的区别在于，getenv不支持IIS的isapi方式运行的PHP。</p>
 </blockquote>
-<p>但是除了这里，我又找到了一处类似的地方，全文搜索getip()后如下：</p>
-<p>全文查找这个变量，在guest_book.php文件中看到了明显的拼接SQL语句</p>
-<p>打开页面，插入一个留言，不过竟然提示我“留言内容不能为空”，明明输入了内容，解决不了了，直接把判定content的语句干掉了，构造攻击数据包测试一下：</p>
-<p>由于$content是留言内容，是会显示到前端的，所以将数据库返回结果返回到这个参数显示出来，动态调试一下：</p>
-<p>执行成功后访问留言列表，发现已经成功显示SQL注入返回的结果：</p>
-<p>写个检测插件冷静一下：<br>防御意见：<br>使用deep_addslashes()函数过滤一下<br>PS：这里我想吐槽一下某个代码审计工具，对于getenv的参数都不跟踪。。</p>
+<p>在这里我们可以看到所有的getenv()取到的参数都没有做处理，可以进行注入。<br>具体参考这篇文章：<a href="https://chybeta.github.io/2017/03/14/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BSQL%E6%B3%A8%E5%85%A5%EF%BC%9ABlueCMSv1-6-sp1/" target="_blank" rel="external">BlueCMS v1.6 sp1 ad_js.php SQL注入漏洞</a><br>不过不知道为什么我访问comment页面为空（有明白的大佬可以和我说一声）<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_6.png" alt="Alt text"><br>但是除了这里，我又找到了一处类似的地方，全文搜索getip()后如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_7.png" alt="Alt text"><br>全文查找这个变量，在guest_book.php文件中看到了明显的拼接SQL语句<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_8.png" alt="Alt text"><br>打开页面，插入一个留言，不过竟然提示我“留言内容不能为空”，明明输入了内容，解决不了了，直接把判定content的语句干掉了，构造攻击数据包测试一下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_9.png" alt="Alt text"><br>由于$content是留言内容，是会显示到前端的，所以将数据库返回结果返回到这个参数显示出来，动态调试一下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_10.png" alt="Alt text"><br>执行成功后访问留言列表，发现已经成功显示SQL注入返回的结果：<br><img src="http://p1wq82j1w.bkt.clouddn.com/12_11.png" alt="Alt text"><br>写个检测插件冷静一下：<br>防御意见：<br>使用deep_addslashes()函数过滤一下<br>PS：这里我想吐槽一下某个代码审计工具，对于getenv的参数都不跟踪。。</p>
 
       
 
@@ -203,7 +206,7 @@
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/jm-wooyun-php-code-audit-2/" data-id="cjd558k7w0012fyjkljgs9mip" class="article-share-link" data-share="baidu" data-title="Wooyun-PHP代码审计小案例-2">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-wooyun-php-code-audit-2/" data-id="cjd55qxtg000zhmjkko9t0djh" class="article-share-link" data-share="baidu" data-title="Wooyun-PHP代码审计小案例-2">分享到</a>
       
 
       
