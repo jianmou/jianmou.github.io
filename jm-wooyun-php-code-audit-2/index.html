@@ -8,18 +8,20 @@
 
   
 
-  <title>Category: Wooyun_PHP_Code_audit | 简眸</title>
+  <title>Wooyun-PHP代码审计小案例-2 | 简眸</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
-<meta property="og:type" content="website">
-<meta property="og:title" content="简眸">
-<meta property="og:url" content="https://jianmou.github.io/categories/Wooyun-PHP-Code-audit/index.html">
+  <meta name="description" content="Wooyun_PHP_Code_audit">
+<meta name="keywords" content="Wooyun-PHP代码审计小案例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wooyun-PHP代码审计小案例-2">
+<meta property="og:url" content="https://jianmou.github.io/jm-wooyun-php-code-audit-2/index.html">
 <meta property="og:site_name" content="简眸">
-<meta property="og:description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
+<meta property="og:description" content="Wooyun_PHP_Code_audit">
+<meta property="og:updated_time" content="2018-02-01T23:40:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简眸">
-<meta name="twitter:description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
+<meta name="twitter:title" content="Wooyun-PHP代码审计小案例-2">
+<meta name="twitter:description" content="Wooyun_PHP_Code_audit">
 
   
 
@@ -134,68 +136,110 @@
 </header>
 
     <div class="outer">
-      <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap"  data-scroll-reveal="enter left and over 0.7s">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-wooyun-php-code-audit-1/" class="archive-article-date">
+      <section id="main"><article   id="post-jm-wooyun-php-code-audit-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div data-scroll-reveal="enter top and over 0.7s"  class="article-meta">
+    <a  href="/jm-wooyun-php-code-audit-2/" class="article-date">
   <i class="fa fa-calendar"></i>
-  <time  datetime="2018-02-17T15:05:10.000Z" itemprop="datePublished">2月 17</time>
+  <time  datetime="2018-02-17T15:05:10.000Z" itemprop="datePublished">2018-02-17</time>
 </a>
 
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Wooyun-PHP-Code-audit/">Wooyun_PHP_Code_audit</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner"  >
+    
+    
+
+      <header class="article-header">
+
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-wooyun-php-code-audit-1/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>Wooyun-PHP代码审计小案例-1</a>
+    <h1 class="article-title" itemprop="name">
+      <i class="fa fa-pencil-square-o  article-title-icon"></i>Wooyun-PHP代码审计小案例-2
     </h1>
   
 
 
-    </header>
-  </div>
-</article>
 
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-wooyun-php-code-audit-2/" class="archive-article-date">
-  <i class="fa fa-calendar"></i>
-  <time  datetime="2018-02-17T15:05:10.000Z" itemprop="datePublished">2月 17</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        </br>
+        <span id="busuanzi_container_page_pv">
+          阅读次数<span id="busuanzi_value_page_pv"></span>
+        </span>
+        <h1 id="BlueCMS-v1-6-sp1-guest-book-php-SQL注入漏洞"><a href="#BlueCMS-v1-6-sp1-guest-book-php-SQL注入漏洞" class="headerlink" title="BlueCMS v1.6 sp1 guest_book.php SQL注入漏洞"></a><strong>BlueCMS v1.6 sp1 guest_book.php SQL注入漏洞</strong></h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>上一篇提到了Wooyun审计案例 - BlueCMS v1.6 sp1 ad_js.php SQL注入漏洞，由于下载了整套源码，所以找找其他的源码，不过网上有人好像发现了一个比较偏一些注入方式。<a id="more"></a><br>针对于 BlueCMS v1.6 sp1 guest_book.php SQL注入漏洞，找到了源码，结合着别人的思路静态审计+动态调试，给大家留下一些思经验。</p>
+<h2 id="Tip：getenv的忽略"><a href="#Tip：getenv的忽略" class="headerlink" title="Tip：getenv的忽略"></a>Tip：getenv的忽略</h2><p>注入点出现在comment.php页面，我们先看最前面一些参数和引入的文件：</p>
+<p>这里引入了/include/common.inc.php文件，里面有这样的一个处理</p>
+<p>跟进deep_addslashes()函数，发现是对函数deep_addslashes()的封装，通俗地讲就是转义了，防止恶意闭合拼接的SQL语句的注入攻击。</p>
+<p>这样其实就已经过滤了绝大多数的参数注入，但是还会有两种情况，第一种是上篇文章提到的SQL语句拼接的时候参数要用单引号包裹，如果没有包裹就做强制类型转换，第二种就是未被过滤的可控参数，详细代码如下：</p>
+<p>在这里我们关注两个SQL语句拼接的地方，第一个是<br><code>$sql = &quot;INSERT INTO &quot;.table(&#39;comment&#39;).&quot; (com_id, post_id, user_id, type, mood, content, pub_date, ip, is_check) 
+      VALUES (&#39;&#39;, &#39;$id&#39;, &#39;$user_id&#39;, &#39;$type&#39;, &#39;$mood&#39;, &#39;$content&#39;, &#39;$timestamp&#39;, &#39;&quot;.getip().&quot;&#39;, &#39;$is_check&#39;)&quot;;</code><br>这里可控的参数都已经被转义或者强制类型转换，但是有一个getip()函数，我们跟进后代码如下：</p>
+<blockquote>
+<p>提示：<br>  getenv 取得系统的环境变量，环境变量的格式为name=value。<br>  $_SERVER是服务器超级全局变量数组<br>  二者的区别在于，getenv不支持IIS的isapi方式运行的PHP。<br>在这里我们可以看到所有的getenv()取到的参数都没有做处理，可以进行注入。<br>具体参考这篇文章：<a href="https://chybeta.github.io/2017/03/14/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BSQL%E6%B3%A8%E5%85%A5%EF%BC%9ABlueCMSv1-6-sp1/" target="_blank" rel="external">BlueCMS v1.6 sp1 ad_js.php SQL注入漏洞</a><br>不过不知道为什么我访问comment页面为空（有明白的大佬可以和我说一声）</p>
+</blockquote>
+<p>但是除了这里，我又找到了一处类似的地方，全文搜索getip()后如下：</p>
+<p>全文查找这个变量，在guest_book.php文件中看到了明显的拼接SQL语句</p>
+<p>打开页面，插入一个留言，不过竟然提示我“留言内容不能为空”，明明输入了内容，解决不了了，直接把判定content的语句干掉了，构造攻击数据包测试一下：</p>
+<p>由于$content是留言内容，是会显示到前端的，所以将数据库返回结果返回到这个参数显示出来，动态调试一下：</p>
+<p>执行成功后访问留言列表，发现已经成功显示SQL注入返回的结果：</p>
+<p>写个检测插件冷静一下：<br>防御意见：<br>使用deep_addslashes()函数过滤一下<br>PS：这里我想吐槽一下某个代码审计工具，对于getenv的参数都不跟踪。。</p>
 
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-wooyun-php-code-audit-2/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>Wooyun-PHP代码审计小案例-2</a>
-    </h1>
-  
+
+    </div>
 
 
-    </header>
+
+
+
+
+
+    <footer class="article-footer">
+      
+        <a data-url="https://jianmou.github.io/jm-wooyun-php-code-audit-2/" data-id="cjd558k7w0012fyjkljgs9mip" class="article-share-link" data-share="baidu" data-title="Wooyun-PHP代码审计小案例-2">分享到</a>
+      
+
+      
+        <a href="https://jianmou.github.io/jm-wooyun-php-code-audit-2/#disqus_thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Wooyun-PHP代码审计小案例/">Wooyun-PHP代码审计小案例</a></li></ul>
+
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/jm-wooyun-php-code-audit-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">← 上一篇</strong>
+      <div class="article-nav-title">Wooyun-PHP代码审计小案例-1</div>
+    </a>
+  
+  
+</nav>
+
+
+  
 </article>
 
-  
-  
-    </div></section>
-  
+
+
+
+  <section class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
 
 </section>
       
@@ -707,11 +751,13 @@ $(document).on("click", "ul.archive-list li.archive-list-item", function () {
 <script>
   var disqus_shortname = 'rapcoder';
   
+  var disqus_url = 'https://jianmou.github.io/jm-wooyun-php-code-audit-2/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
