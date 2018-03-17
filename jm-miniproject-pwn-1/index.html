@@ -11,13 +11,13 @@
   <title>Pwn-tip | Format String（格式化字符串）漏洞 | 简眸</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="MiniProject_PHP_Code_audit">
-<meta name="keywords" content="VulnCTF | PHP代码审计">
+  <meta name="description" content="MiniProject_Pwn">
+<meta name="keywords" content="VulnCTF | Pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pwn-tip | Format String（格式化字符串）漏洞">
 <meta property="og:url" content="https://jianmou.github.io/jm-miniproject-pwn-1/index.html">
 <meta property="og:site_name" content="简眸">
-<meta property="og:description" content="MiniProject_PHP_Code_audit">
+<meta property="og:description" content="MiniProject_Pwn">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_1.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_2.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_3.png">
@@ -31,10 +31,10 @@
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_11.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_12.png">
 <meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_13.png">
-<meta property="og:updated_time" content="2018-03-17T06:36:53.000Z">
+<meta property="og:updated_time" content="2018-03-17T06:50:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pwn-tip | Format String（格式化字符串）漏洞">
-<meta name="twitter:description" content="MiniProject_PHP_Code_audit">
+<meta name="twitter:description" content="MiniProject_Pwn">
 <meta name="twitter:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_1.png">
 
   
@@ -154,12 +154,12 @@
   <div data-scroll-reveal="enter top and over 0.7s"  class="article-meta">
     <a  href="/jm-miniproject-pwn-1/" class="article-date">
   <i class="fa fa-calendar"></i>
-  <time  datetime="2018-01-17T15:05:10.000Z" itemprop="datePublished">2018-01-17</time>
+  <time  datetime="2018-03-17T15:05:10.000Z" itemprop="datePublished">2018-03-17</time>
 </a>
 
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/MiniProject-PHP-Code-audit/">MiniProject_PHP_Code_audit</a>
+    <a class="article-category-link" href="/categories/MiniProject-Pwn/">MiniProject_Pwn</a>
   </div>
 
 
@@ -192,8 +192,9 @@
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>格式化信息有某种字符串来描述，称为格式化字符串。（格式化字符串是用一种功能有限的数据处理语言来描述，以便于描述输出的格式）</p>
 <p>格式化字符串漏洞的根源在于未对用户提供的输入进行验证。参数个数不定的常见函数集合是printf函数族：printf，sprintf，snprintf，fprintf，vprintf等。</p>
 <blockquote>
-<p>C 库函数 - printf()：C 库函数 int printf(const char <em>format, …) 发送格式化输出到标准输出 stdout。<br>printf()函数的调用格式为：printf(“&lt;格式化字符串&gt;”, &lt;参量表&gt;);<br>int printf(const char </em>format, …)<br>format – 这是字符串，包含了要被写入到标准输出 stdout 的文本。它可以包含嵌入的 format 标签，format 标签可被随后的附加参数中指定的值替换，并按需求进行格式化。format 标签属性是 %[flags][width][.precision][length]specifier，具体讲解如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_1.png" alt="Alt text"><br>具体原理：当printf在输出格式化字符串的时候，会维护一个内部指针，当printf逐步将格式化字符串的字符打印到屏幕，当遇到%的时候，printf会期望它后面跟着一个格式字符串，因此会递增内部字符串以抓取格式控制符的输入值。这就是问题所在，printf无法知道栈上是否放置了正确数量的变量供它操作，如果没有足够的变量可供操作，而指针按正常情况下递增，就会产生越界访问。甚至由于%n的问题，可导致任意地址读写。</p>
+<p>C 库函数 - printf()：C 库函数 int printf(const char <em>format, …) 发送格式化输出到标准输出 stdout。<br>printf()函数的调用格式为：printf(“&lt;格式化字符串&gt;”, &lt;参量表&gt;);<br>int printf(const char </em>format, …)<br>format – 这是字符串，包含了要被写入到标准输出 stdout 的文本。它可以包含嵌入的 format 标签，format 标签可被随后的附加参数中指定的值替换，并按需求进行格式化。format 标签属性是 %[flags][width][.precision][length]specifier，具体讲解如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_1.png" alt="Alt text"></p>
 </blockquote>
+<p>具体原理：当printf在输出格式化字符串的时候，会维护一个内部指针，当printf逐步将格式化字符串的字符打印到屏幕，当遇到%的时候，printf会期望它后面跟着一个格式字符串，因此会递增内部字符串以抓取格式控制符的输入值。这就是问题所在，printf无法知道栈上是否放置了正确数量的变量供它操作，如果没有足够的变量可供操作，而指针按正常情况下递增，就会产生越界访问。甚至由于%n的问题，可导致任意地址读写。</p>
 <h2 id="案例-编译一道简单的Pwn的题目（X64编译）"><a href="#案例-编译一道简单的Pwn的题目（X64编译）" class="headerlink" title="案例 - 编译一道简单的Pwn的题目（X64编译）"></a>案例 - 编译一道简单的Pwn的题目（X64编译）</h2><p>源代码如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_2.png" alt="Alt text"><br>使用gcc编译一下，生成pwn.out文件：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_3.png" alt="Alt text"><br>虽然爆出了一个警告，但是仍然可以使用。好像是因为gcc版本高一点的会在编译的时候检查里面的语法，好像也可以关闭这种检查…有强迫症的可以自行查一下0.0.</p>
 <p><code>-fstack-protector:启用堆栈保护,不过只为局部变量中含有char数组的函数插入保护代码;
 -fstack-protector-all:启用堆栈保护,为所有函数插入保护代码;
@@ -225,7 +226,7 @@ p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><b
 
     <footer class="article-footer">
       
-        <a data-url="https://jianmou.github.io/jm-miniproject-pwn-1/" data-id="cjev06bkd000yrpnsdvlbg31b" class="article-share-link" data-share="baidu" data-title="Pwn-tip | Format String（格式化字符串）漏洞">分享到</a>
+        <a data-url="https://jianmou.github.io/jm-miniproject-pwn-1/" data-id="cjev0jpsz000xsnns9xhhuwes" class="article-share-link" data-share="baidu" data-title="Pwn-tip | Format String（格式化字符串）漏洞">分享到</a>
       
 
       
@@ -233,7 +234,7 @@ p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><b
       
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VulnCTF-PHP代码审计/">VulnCTF | PHP代码审计</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VulnCTF-Pwn/">VulnCTF | Pwn</a></li></ul>
 
 
     </footer>
@@ -242,20 +243,11 @@ p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><b
     
 <nav id="article-nav">
   
-    <a href="/jm-miniproject-php-code-audit-9/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/jm-wooyun-php-code-audit-2/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">← 上一篇</strong>
-      <div class="article-nav-title">CTF中PHP代码审计小tips-9</div>
+      <div class="article-nav-title">Wooyun-PHP代码审计小案例-2</div>
     </a>
   
-  
-    <a href="/jm-miniproject-php-code-audit-10/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇 →</strong>
-      <div class="article-nav-title">
-        
-          CTF中PHP代码审计小tips-10
-        
-      </div>
-    </a>
   
 </nav>
 
@@ -284,6 +276,10 @@ p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><b
       <ul>
         
           <li onclick="javascript:document.getElementById('recentpost_item').click();">
+            <a id="recentpost_item" href="/jm-miniproject-pwn-1/">Pwn-tip | Format String（格式化字符串）漏洞</a>
+          </li>
+        
+          <li onclick="javascript:document.getElementById('recentpost_item').click();">
             <a id="recentpost_item" href="/jm-wooyun-php-code-audit-2/">Wooyun-PHP代码审计小案例-2</a>
           </li>
         
@@ -293,10 +289,6 @@ p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><b
         
           <li onclick="javascript:document.getElementById('recentpost_item').click();">
             <a id="recentpost_item" href="/jm-miniproject-php-code-audit-10/">CTF中PHP代码审计小tips-10</a>
-          </li>
-        
-          <li onclick="javascript:document.getElementById('recentpost_item').click();">
-            <a id="recentpost_item" href="/jm-miniproject-pwn-1/">Pwn-tip | Format String（格式化字符串）漏洞</a>
           </li>
         
           <li onclick="javascript:document.getElementById('recentpost_item').click();">
@@ -313,7 +305,7 @@ p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><b
   <div class="widget-wrap">
     <h3 class="widget-title" data-scroll-reveal="enter top and over 0.7s" ><i class="fa fa-tasks"></i>分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MiniProject-PHP-Code-audit/">MiniProject_PHP_Code_audit</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wooyun-PHP-Code-audit/">Wooyun_PHP_Code_audit</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/陌小皓-随笔/">陌小皓 随笔</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MiniProject-PHP-Code-audit/">MiniProject_PHP_Code_audit</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MiniProject-Pwn/">MiniProject_Pwn</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Wooyun-PHP-Code-audit/">Wooyun_PHP_Code_audit</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/陌小皓-随笔/">陌小皓 随笔</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -329,7 +321,7 @@ p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><b
   <div class="widget-wrap">
     <h3 class="widget-title" data-scroll-reveal="enter top and over 0.7s" ><i class="fa fa-cloud"></i>标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/VulnCTF-PHP代码审计/" style="font-size: 20px;">VulnCTF | PHP代码审计</a> <a href="/tags/Wooyun-PHP代码审计小案例/" style="font-size: 15px;">Wooyun-PHP代码审计小案例</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+      <a href="/tags/VulnCTF-PHP代码审计/" style="font-size: 20px;">VulnCTF | PHP代码审计</a> <a href="/tags/VulnCTF-Pwn/" style="font-size: 10px;">VulnCTF | Pwn</a> <a href="/tags/Wooyun-PHP代码审计小案例/" style="font-size: 15px;">Wooyun-PHP代码审计小案例</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     </div>
   </div>
 
@@ -339,8 +331,8 @@ p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><b
   <div class="widget-wrap">
     <h3 class="widget-title" data-scroll-reveal="enter top and over 0.7s" ><i class="fa fa-archive"></i>归档</h3>
     <div class="widget">
-      <!-- <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li></ul> -->
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2018年02月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">2018年01月</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">2017年12月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">2017年11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">2017年10月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年09月</a><span class="archive-list-count">3</span></li></ul>
+      <!-- <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li></ul> -->
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">2018年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2018年02月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">2018年01月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">2017年12月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">2017年11月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">2017年10月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">2017年09月</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
