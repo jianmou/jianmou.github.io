@@ -8,18 +8,34 @@
 
   
 
-  <title>Category: 陌小皓 随笔 | 简眸</title>
+  <title>Pwn-tip | Format String（格式化字符串）漏洞 | 简眸</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
-<meta property="og:type" content="website">
-<meta property="og:title" content="简眸">
-<meta property="og:url" content="https://jianmou.github.io/categories/陌小皓-随笔/index.html">
+  <meta name="description" content="MiniProject_PHP_Code_audit">
+<meta name="keywords" content="VulnCTF | PHP代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pwn-tip | Format String（格式化字符串）漏洞">
+<meta property="og:url" content="https://jianmou.github.io/jm-miniproject-pwn-1/index.html">
 <meta property="og:site_name" content="简眸">
-<meta property="og:description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
+<meta property="og:description" content="MiniProject_PHP_Code_audit">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_1.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_2.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_3.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_4.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_5.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_6.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_7.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_8.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_9.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_10.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_11.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_12.png">
+<meta property="og:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_13.png">
+<meta property="og:updated_time" content="2018-03-17T06:36:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简眸">
-<meta name="twitter:description" content="走投无路的进城搬砖人员，一个内心文艺的白帽子">
+<meta name="twitter:title" content="Pwn-tip | Format String（格式化字符串）漏洞">
+<meta name="twitter:description" content="MiniProject_PHP_Code_audit">
+<meta name="twitter:image" content="http://p1wq82j1w.bkt.clouddn.com/pwn1_1.png">
 
   
 
@@ -134,44 +150,127 @@
 </header>
 
     <div class="outer">
-      <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap"  data-scroll-reveal="enter left and over 0.7s">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div  class="archive-article-inner">
-    <header class="archive-article-header">
-      <a  href="/jm-miniproject-essay-1/" class="archive-article-date">
+      <section id="main"><article   id="post-jm-miniproject-pwn-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div data-scroll-reveal="enter top and over 0.7s"  class="article-meta">
+    <a  href="/jm-miniproject-pwn-1/" class="article-date">
   <i class="fa fa-calendar"></i>
-  <time  datetime="2017-09-17T15:04:57.000Z" itemprop="datePublished">9月 17</time>
+  <time  datetime="2018-01-17T15:05:10.000Z" itemprop="datePublished">2018-01-17</time>
 </a>
 
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MiniProject-PHP-Code-audit/">MiniProject_PHP_Code_audit</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner"  >
+    
+    
+
+      <header class="article-header">
+
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/jm-miniproject-essay-1/">
-        <i class="fa fa-pencil-square-o  article-title-icon"></i>依旧在路上</a>
+    <h1 class="article-title" itemprop="name">
+      <i class="fa fa-pencil-square-o  article-title-icon"></i>Pwn-tip | Format String（格式化字符串）漏洞
     </h1>
   
 
 
-    </header>
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+        </br>
+        <span id="busuanzi_container_page_pv">
+          阅读次数<span id="busuanzi_value_page_pv"></span>
+        </span>
+        <h1 id="Format-String（格式化字符串）漏洞"><a href="#Format-String（格式化字符串）漏洞" class="headerlink" title="Format String（格式化字符串）漏洞"></a><strong>Format String（格式化字符串）漏洞</strong></h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>格式化信息有某种字符串来描述，称为格式化字符串。格式化字符串漏洞的根源在于未对用户提供的输入进行验证。<a id="more"></a></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>格式化信息有某种字符串来描述，称为格式化字符串。（格式化字符串是用一种功能有限的数据处理语言来描述，以便于描述输出的格式）</p>
+<p>格式化字符串漏洞的根源在于未对用户提供的输入进行验证。参数个数不定的常见函数集合是printf函数族：printf，sprintf，snprintf，fprintf，vprintf等。</p>
+<blockquote>
+<p>C 库函数 - printf()：C 库函数 int printf(const char <em>format, …) 发送格式化输出到标准输出 stdout。<br>printf()函数的调用格式为：printf(“&lt;格式化字符串&gt;”, &lt;参量表&gt;);<br>int printf(const char </em>format, …)<br>format – 这是字符串，包含了要被写入到标准输出 stdout 的文本。它可以包含嵌入的 format 标签，format 标签可被随后的附加参数中指定的值替换，并按需求进行格式化。format 标签属性是 %[flags][width][.precision][length]specifier，具体讲解如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_1.png" alt="Alt text"><br>具体原理：当printf在输出格式化字符串的时候，会维护一个内部指针，当printf逐步将格式化字符串的字符打印到屏幕，当遇到%的时候，printf会期望它后面跟着一个格式字符串，因此会递增内部字符串以抓取格式控制符的输入值。这就是问题所在，printf无法知道栈上是否放置了正确数量的变量供它操作，如果没有足够的变量可供操作，而指针按正常情况下递增，就会产生越界访问。甚至由于%n的问题，可导致任意地址读写。</p>
+</blockquote>
+<h2 id="案例-编译一道简单的Pwn的题目（X64编译）"><a href="#案例-编译一道简单的Pwn的题目（X64编译）" class="headerlink" title="案例 - 编译一道简单的Pwn的题目（X64编译）"></a>案例 - 编译一道简单的Pwn的题目（X64编译）</h2><p>源代码如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_2.png" alt="Alt text"><br>使用gcc编译一下，生成pwn.out文件：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_3.png" alt="Alt text"><br>虽然爆出了一个警告，但是仍然可以使用。好像是因为gcc版本高一点的会在编译的时候检查里面的语法，好像也可以关闭这种检查…有强迫症的可以自行查一下0.0.</p>
+<p><code>-fstack-protector:启用堆栈保护,不过只为局部变量中含有char数组的函数插入保护代码;
+-fstack-protector-all:启用堆栈保护,为所有函数插入保护代码;
+-fno-stack-protector:禁用堆栈保护;</code></p>
+<p>顺便提一下我编译的环境：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_4.png" alt="Alt text"><br>运行一下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_5.png" alt="Alt text"><br>运行没有问题，我们发现输入的数据都被解释成了格式化字符串，这个时候就要测试一下有没有Format String漏洞，我们静态看一下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_6.png" alt="Alt text"><br>看汇编不明显，我们用堆栈图表示：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_7.png" alt="Alt text"><br>这里我们还原一下c语言的关键点：<br><code>int a
+int* p(p是指向int型变量的指针)
+a = 0
+p = &amp;a(p指向a变量的int型指针，修改*p就相当于修改a)</code><br>在这里我们看到一个比较（cmp），如果a=2000，就能拿到flag。前面提到了修改<em>p就相当于修改a，我们没有办法直接修改a的值（原因：）所以我们就只能修改</em>p（p地址里面的数据），我们算一下我们需要多少个参数才可以到这个位置：<br><code>（112-8）/8=13</code><br>通常利用格式化字符串漏洞写入内存的说明符是%n，它可以向给定变量的地址写入当前已写入的字符个数，作为相应的参数，所以我们的利用代码应该是：<br>%2000x%13$n<br>但是最后的效果不是很好。。<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_8.png" alt="Alt text"><br>Segmentation fault (core dumped)多为内存不当（空指针、野指针的读写操作，数组越界访问，破坏常量等）操作造成。<br>想想不知道哪里出问题了，就只能一个一个来打印一下试试：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_9.png" alt="Alt text"><br>（%x：从栈中读取数据，每次四个字节，%s：打印参数指向地址里面的内容。%p：不仅显示栈，还会显示程序是32位还是64位，打印出参数的内容）<br>看不出来什么情况…动态调试一下，当我们调试到：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_10.png" alt="Alt text"><br>我们看到现在寄存器的值如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_11.png" alt="Alt text"><br>最终运行的结果如下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_12.png" alt="Alt text"><br><code>0x1
+0x7fe4c61e9790
+0xa
+(nil)
+0x7fe4c6409700
+0x7025702570257025
+0x702570257025</code><br>这个时候才想起来，在X86-64中，所有寄存器都是64位，%rdi，%rsi，%rdx，%rcx，%r8，%r9 用作函数参数，依次对应第1参数，第2参数…如果函数的参数个数超过6个，则超过的参数直接使用栈来传递。所以应该是13+6=19个参数，所以利用的代码应该是：%2000x%19$n，我们试验一下：<br><img src="http://p1wq82j1w.bkt.clouddn.com/pwn1_13.png" alt="Alt text"><br>嗯，到此为止，已经可以了。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>网上出现的都是X86编译的，X64编译的有一点坑需要踩…<br>补救措施也很简单：<br>printf(“s%”, a)<br>PS:尽量不要使用printf族的函数<br>最后给一个来源于《软件安全24宗罪》的提示：</p>
+<blockquote>
+<p>要使用固定的格式化字符串，或者来自可信源的格式化字符串。<br>要检查并限定locale的请求为有效值。<br>要注意编译器给出的警告和错误（我前面在编译的时候出现过那个警告，虽然也编译成功了，但是很多不注重安全，只注重效果的大佬们可能赶项目，只注重功能的开发）<br>不要将用户输入直接作为格式化字符串传给格式化函数。<br>考虑使用受此漏洞影响较小的高级语言。</p>
+</blockquote>
+
+      
+
+    </div>
+
+
+
+
+
+
+
+    <footer class="article-footer">
+      
+        <a data-url="https://jianmou.github.io/jm-miniproject-pwn-1/" data-id="cjev06bkd000yrpnsdvlbg31b" class="article-share-link" data-share="baidu" data-title="Pwn-tip | Format String（格式化字符串）漏洞">分享到</a>
+      
+
+      
+        <a href="https://jianmou.github.io/jm-miniproject-pwn-1/#disqus_thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VulnCTF-PHP代码审计/">VulnCTF | PHP代码审计</a></li></ul>
+
+
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/jm-miniproject-php-code-audit-9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">← 上一篇</strong>
+      <div class="article-nav-title">CTF中PHP代码审计小tips-9</div>
+    </a>
+  
+  
+    <a href="/jm-miniproject-php-code-audit-10/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇 →</strong>
+      <div class="article-nav-title">
+        
+          CTF中PHP代码审计小tips-10
+        
+      </div>
+    </a>
+  
+</nav>
+
 
   
-  
-    </div></section>
-  
+</article>
+
+
+
+
+  <section class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
 
 </section>
       
@@ -683,11 +782,13 @@ $(document).on("click", "ul.archive-list li.archive-list-item", function () {
 <script>
   var disqus_shortname = 'rapcoder';
   
+  var disqus_url = 'https://jianmou.github.io/jm-miniproject-pwn-1/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
