@@ -18,16 +18,16 @@
 <meta property="og:url" content="https://jianmou.github.io/jm-miniproject-php-code-audit-4/index.html">
 <meta property="og:site_name" content="简眸">
 <meta property="og:description" content="MiniProject_PHP_Code_audit">
-<meta property="og:image" content="https://i.loli.net/2020/06/25/7ginrOXxTsH5BD2.png">
 <meta property="og:image" content="https://i.loli.net/2020/06/25/UTjfm59KQ37XOJi.png">
-<meta property="og:image" content="https://i.loli.net/2020/06/25/UTjfm59KQ37XOJi.png">
-<meta property="og:image" content="https://i.loli.net/2020/06/25/uZJwFBLW6s8n1MK.png">
-<meta property="og:image" content="https://i.loli.net/2020/06/25/YGi7wuA8Ekq5jn6.png">
-<meta property="og:updated_time" content="2020-06-25T07:52:16.110Z">
+<meta property="og:image" content="https://i.loli.net/2020/06/25/1BgoLqe6p8idsKw.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/25/qewt5DZkoTbVl3f.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/25/cd8wERoUSQCXN6D.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/06/25/GU3Iwhr7uiEsXf8.png">
+<meta property="og:updated_time" content="2020-06-25T13:28:46.049Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CTF中PHP代码审计小tips-4">
 <meta name="twitter:description" content="MiniProject_PHP_Code_audit">
-<meta name="twitter:image" content="https://i.loli.net/2020/06/25/7ginrOXxTsH5BD2.png">
+<meta name="twitter:image" content="https://i.loli.net/2020/06/25/UTjfm59KQ37XOJi.png">
 
   
 
@@ -181,15 +181,9 @@
           阅读次数<span id="busuanzi_value_page_pv"></span>
         </span>
         <h1 id="MiniProject-PHP-Code-audit-4-Writeup"><a href="#MiniProject-PHP-Code-audit-4-Writeup" class="headerlink" title="MiniProject_PHP_Code_audit-4 Writeup"></a><strong>MiniProject_PHP_Code_audit-4 Writeup</strong></h1><h2 id="整体逻辑："><a href="#整体逻辑：" class="headerlink" title="整体逻辑："></a>整体逻辑：</h2><p>初始变量被赋值为string，所以打开就是输出”is_numeric(a) and is_numeric(b) error ！”，根据题目同时出现is_numeric()和and判断，引用暗羽表姐的博客截图来绕过第二个is_numeric() 判断，绕过 。<a id="more"></a></p>
-<h2 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h2><p>只是知道这是绕过的一种方式，但是为什么会出现这种情况呢，本来以为只要第一个判断为真就不会判断后面的条件正确还是不正确 ，以为问题出现在is_numeric，但是问题好像出现在and上面，根据PHP的优先级来看 赋值运算= 优先级大于 and 。<br>举一个例子：<br><img src="https://i.loli.net/2020/06/25/7ginrOXxTsH5BD2.png" alt="4_4.png"><br>算是PHP的一种特性吧：<br><img src="https://i.loli.net/2020/06/25/UTjfm59KQ37XOJi.png" alt="4_1.png"></p>
-<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><pre><code>&lt;?php 
-$test = true and false;
-var_dump($test);
-
-$test2 = true &amp;&amp; false;
-var_dump($test2);
-?&gt;
-</code></pre><h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>初始变量被赋值为string，所以打开就是输出”is_numeric(a) and is_numeric(b) error ！”，根据题目同时出现is_numeric()和and判断（图一）<br><img src="https://i.loli.net/2020/06/25/UTjfm59KQ37XOJi.png" alt="4_1.png"><br>由于使用了and，出现了PHP解析优先级的问题，绕过。<br><img src="https://i.loli.net/2020/06/25/uZJwFBLW6s8n1MK.png" alt="4_2.png"><br><img src="https://i.loli.net/2020/06/25/YGi7wuA8Ekq5jn6.png" alt="4_3.png"></p>
+<h2 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h2><p>只是知道这是绕过的一种方式，但是为什么会出现这种情况呢，本来以为只要第一个判断为真就不会判断后面的条件正确还是不正确 ，以为问题出现在is_numeric，但是问题好像出现在and上面，根据PHP的优先级来看 赋值运算= 优先级大于 and 。（算是PHP的一种特性吧）<br>官方描述：<br><img src="https://i.loli.net/2020/06/25/UTjfm59KQ37XOJi.png" alt="4_1.png"></p>
+<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><p>看一个例子：<br><img src="https://i.loli.net/2020/06/25/1BgoLqe6p8idsKw.png" alt="4_6.png"></p>
+<h2 id="Writeup："><a href="#Writeup：" class="headerlink" title="Writeup："></a>Writeup：</h2><p>当有两个is_numeric判断并用and连接时，and后面的is_numeric可以绕过。<br>PHP中is_numeric 检测变量是否为数字或数字字符串，如果 var 是数字和数字字符串则返回 TRUE，否则返回 FALSE。<br>初始变量被赋值为string，所以打开就是输出”is_numeric(a) and is_numeric(b) error ！”，根据题目同时出现is_numeric()和and判断<br><img src="https://i.loli.net/2020/06/25/qewt5DZkoTbVl3f.png" alt="4_0.png"><br>引用暗羽表姐的博客截图来绕过第二个is_numeric() 判断<br><img src="https://i.loli.net/2020/06/25/cd8wERoUSQCXN6D.jpg" alt="4_7.jpg"><br>绕过<br><img src="https://i.loli.net/2020/06/25/GU3Iwhr7uiEsXf8.png" alt="4_8.png"></p>
 <h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>由PHP小tip引发的思考（PHP优先级）：<a href="https://www.t00ls.net/viewthread.php?from=notice&amp;tid=42223" target="_blank" rel="external">https://www.t00ls.net/viewthread.php?from=notice&amp;tid=42223</a><br>CTF 之 PHP 黑魔法总结 ：<a href="http://www.zjicmisa.org/index.php/archives/112/" target="_blank" rel="external">http://www.zjicmisa.org/index.php/archives/112/</a><br>运算符优先级：<a href="http://php.net/manual/zh/language.operators.precedence.php" target="_blank" rel="external">http://php.net/manual/zh/language.operators.precedence.php</a></p>
 
       
